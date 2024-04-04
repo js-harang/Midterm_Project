@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Background 무한루프
 /// </summary>
-public class Background : MonoBehaviour
+public class Background2 : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [Space]
@@ -14,11 +14,11 @@ public class Background : MonoBehaviour
 
     private void Update()
     {
-        Vector3 x = new Vector3(20 - ((Time.time+10) % 20), 0, 0);
+        Vector3 x = new Vector3(10 - (Time.time % 20), 0, 0);
 
         transform.position = x;
 
-        if (transform.position.x <= 0)
+        if (transform.position.x <= -10)
         {
             Vector3 a = new Vector3(10, 0, 0);
 

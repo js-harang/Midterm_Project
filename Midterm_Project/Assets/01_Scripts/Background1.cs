@@ -14,11 +14,11 @@ public class Background1 : MonoBehaviour
 
     private void Update()
     {
-        Vector3 x = new Vector3(20 - (Time.time % 20), 0, 0);
+        Vector3 x = new Vector3(10 - ((Time.time + 10) % 20), 0, 0);
 
         transform.position = x;
 
-        if (transform.position.x <= 0)
+        if (transform.position.x <= -10)
         {
             Vector3 a = new Vector3(10, 0, 0);
 
