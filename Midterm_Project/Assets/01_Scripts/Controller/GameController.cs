@@ -3,13 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    GameManager gm = GameManager.instance;
+    GameManager gm;
     ScreenManager sm;
-
-    public void GameStartBtn() => sm.ChangeScene("02_Main");
 
     private void Start()
     {
+        gm = GameManager.instance;
         sm = ScreenManager.instance;
 
         Screen.SetResolution(1080, 1920, true);
@@ -32,4 +31,6 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
+    public void GameStartBtn() => sm.ChangeScene("02_Main");
 }

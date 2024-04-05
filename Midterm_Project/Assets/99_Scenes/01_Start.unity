@@ -1732,9 +1732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a8dd1aad92aae4781c7007d44a03f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1710383881}
-  moveSpeed: 0.01
-  scrollAmount: 10
+  startPosition: 0
 --- !u!1 &1187024100
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,12 +2463,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1710383877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcfdb6642223be04e8917e915e8791df, type: 3}
+  m_Script: {fileID: 11500000, guid: 68a8dd1aad92aae4781c7007d44a03f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1026268301}
-  moveSpeed: 0.01
-  scrollAmount: 10
+  startPosition: 10
 --- !u!1 &1754135056
 GameObject:
   m_ObjectHideFlags: 0
