@@ -24,7 +24,6 @@ public class GameController : MonoBehaviour
             {
                 case "01_Start":
                     sm.popupUIActive = !sm.popupUIActive;
-                    //sm.popupUI.SetActive(sm.popupUIActive);
                     break;
                 case "02_Main":
                     break;
