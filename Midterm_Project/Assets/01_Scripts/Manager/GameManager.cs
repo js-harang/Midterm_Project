@@ -16,5 +16,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int enemyCount;
+    [HideInInspector] public int enemyCount;
 }

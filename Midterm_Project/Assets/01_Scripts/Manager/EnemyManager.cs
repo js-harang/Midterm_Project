@@ -9,12 +9,12 @@ public class EnemyManager : MonoBehaviour
 
     public void Start()
     {
-        for (int i = 0; i < enemyObjectPool.Length; i++)
-        {
-            GameObject enemy = enemyPrepab;
-            enemyObjectPool[i] = Instantiate(enemy);
-            enemy.SetActive(false);
-        }
+        //for (int i = 0; i < enemyObjectPool.Length; i++)
+        //{
+        //    GameObject enemy = enemyPrepab;
+        //    enemyObjectPool[i] = Instantiate(enemy);
+        //    enemy.SetActive(false);
+        //}
     }
 
     public void Respawn()

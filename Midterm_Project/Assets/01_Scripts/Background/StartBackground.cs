@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Background 무한루프
 /// </summary>
-public class Background : MonoBehaviour
+public class StartBackground : MonoBehaviour
 {
     private GameManager gm;
 
@@ -16,9 +16,9 @@ public class Background : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(10 - ((Time.time + startPosition) % 20), 0, 0);
+        transform.position = new Vector3(10 - ((Time.time + startPosition) % 20), 1, 0);
 
         if (transform.position.x <= -10)
-            transform.position = new Vector3(10, 0, 0);
+            transform.position = new Vector3(10, 1, 0);
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    GameManager gm;
-    ScreenManager sm;
+    private GameManager gm;
+    private ScreenManager sm;
 
     private void Start()
     {
