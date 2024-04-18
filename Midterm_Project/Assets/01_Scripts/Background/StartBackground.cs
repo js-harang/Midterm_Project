@@ -16,16 +16,18 @@ public class StartBackground : MonoBehaviour
         {
             Vector2 position = new Vector2(10 * i, 0);
             GameObject obj = Instantiate(background, position, Quaternion.identity);
+            BackgroundMove back = obj.GetComponent<BackgroundMove>();
             currentBackground.Add(obj);
+            back.initialValue = 10 * i;
         }
 
-        //screenWidth = currentBackground[0].transform.;
+        screenWidth = currentBackground[0].transform.Find("X").localScale.x;
     }
 
-    private void Update()
-    {
-        BackgroundPosition();
-    }
+    //private void Update()
+    //{
+    //    BackgroundPosition();
+    //}
 
     private void BackgroundPosition()
     {
@@ -33,7 +35,7 @@ public class StartBackground : MonoBehaviour
         float moveStageX = Camera.main.transform.position.x + screenWidth;
         float startX = currentBackground[currentBackground.Count - 1].transform.position.x + screenWidth;
 
-        if (currentBackground[currentBackground.Count - 1].transform.position.x < moveStageX)
+        if (currentBackground[currentBackground.Count - 1].transform.position.x <= moveStageX)
         {
             obj.transform.position = new Vector2(startX, 0);
             currentBackground.Remove(obj);
