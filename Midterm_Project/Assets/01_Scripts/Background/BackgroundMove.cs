@@ -20,7 +20,7 @@ public class BackgroundMove : MonoBehaviour
         count++;
         if(x <= -10)
         {
-            initialValue = 20;
+            initialValue += ;
             count = 0;
         }
         //Vector2 newVelocity = rb.velocity;

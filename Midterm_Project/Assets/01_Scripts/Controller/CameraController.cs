@@ -10,10 +10,10 @@ public class CameraController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-        Vector2 newVelocity = rb.velocity;
-        newVelocity.x = speed;
-        rb.velocity = newVelocity;
-    }
+    //private void Update()
+    //{
+    //    Vector2 newVelocity = rb.velocity;
+    //    newVelocity.x = speed;
+    //    rb.velocity = newVelocity;
+    //}
 }
