@@ -1,17 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Background : MonoBehaviour
 {
+    private BackgroundController bc;
+
     [SerializeField] private float speed;
     public int initialValue;
-    private int count = 0;
+
+    private void Start()
+    {
+        bc = GameObject.Find("GameController").GetComponent<BackgroundController>();
+    }
 
     private void Update()
     {
-        float positionX = initialValue - speed * 0.125f;
-        transform.position = new Vector2 (positionX, 0);
-        count++;
+        float positionX = transform.position.x - speed * 0.001f;
+        gameObject.transform.position = new Vector2(positionX, 0);
     }
 }

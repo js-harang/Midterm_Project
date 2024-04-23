@@ -1277,6 +1277,7 @@ GameObject:
   - component: {fileID: 1483255109}
   - component: {fileID: 1483255108}
   - component: {fileID: 1483255110}
+  - component: {fileID: 1483255111}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1296,7 +1297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598c7c6219a9a3a4cbba04a372cbb8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 7275804441149770046, guid: 2b75c743270986240af441d677534e2a, type: 3}
 --- !u!4 &1483255109
 Transform:
   m_ObjectHideFlags: 0
@@ -1325,6 +1325,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCount: 0
+--- !u!114 &1483255111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483255107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9829376cb0f25c645b6495f52c34e498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 7275804441149770046, guid: 2b75c743270986240af441d677534e2a, type: 3}
 --- !u!1 &1639855820
 GameObject:
   m_ObjectHideFlags: 0

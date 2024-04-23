@@ -10,6 +10,7 @@ public class BackgroundMove : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        //initialValue = transform.position.x;
     }
 
     private void Update()
@@ -20,7 +21,7 @@ public class BackgroundMove : MonoBehaviour
         count++;
         if(x <= -10)
         {
-            initialValue += ;
+            initialValue += 20;
             count = 0;
         }
         //Vector2 newVelocity = rb.velocity;
