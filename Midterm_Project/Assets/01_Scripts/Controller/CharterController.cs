@@ -6,4 +6,9 @@ public class CharterController : MonoBehaviour
     {
 
     }
+
+    public void Move()
+    {
+        
+    }
 }
