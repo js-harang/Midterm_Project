@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
     private ScreenManager sm;
 
     private int gameSpeed = 1;
+    [SerializeField] private GameObject speed1X;
+    [SerializeField] private GameObject speed2X;
 
     private void Start()
     {
@@ -29,7 +31,10 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void GameStartBtn() => sm.ChangeScene("02_Main");
+    public void GameStartBtn()
+    {
+        sm.ChangeScene("02_Main");
+    }
 
     public void Speed2X()
     {
@@ -37,6 +42,9 @@ public class GameController : MonoBehaviour
             gameSpeed++;
         else
             gameSpeed--;
+
+        speed1X.SetActive(gameSpeed == 1);
+        speed2X.SetActive(gameSpeed == 2);
 
         Time.timeScale = 1f * gameSpeed;
     }
