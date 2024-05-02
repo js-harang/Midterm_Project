@@ -25,7 +25,7 @@ public class ScreenManager : MonoBehaviour
     public bool popupUIActive = false;
 
     [SerializeField] private CanvasGroup fadeImg;
-    [Space]
+    [Space(10f)]
     [SerializeField] private GameObject loadingUI;
     [SerializeField] private Slider loadingBar;
     [SerializeField] private TMP_Text loadingText;

@@ -1,5 +1,9 @@
-﻿using UnityEditor;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.IO;
+using System.Linq;
 
 [CustomEditor(typeof(SPUM_Exporter))]
 [CanEditMultipleObjects]
@@ -14,31 +18,31 @@ public class SPUM_ExporterEditor : Editor
     SerializedProperty _fullSize;
     SerializedProperty _scaleFactor;
     SerializedProperty _frameRate;
-    SerializedProperty _advanced;
+    SerializedProperty _advanced;    
     SerializedProperty _camera;
-    SerializedProperty _anim;
-    SerializedProperty _objectPivot;
-    SerializedProperty _objectNow;
-    SerializedProperty _imgBG;
-    SerializedProperty _bgSet;
-    SerializedProperty frameNowNumber;
-    SerializedProperty _animNum;
-    SerializedProperty timer;
-    SerializedProperty timerForSave;
-    SerializedProperty useTimer;
-    SerializedProperty _netAnimClip;
-    SerializedProperty animNum;
+	SerializedProperty _anim;
+	SerializedProperty _objectPivot;
+	SerializedProperty _objectNow;
+	SerializedProperty _imgBG;
+	SerializedProperty _bgSet;
+	SerializedProperty frameNowNumber;
+	SerializedProperty _animNum;
+	SerializedProperty timer;
+	SerializedProperty timerForSave;
+	SerializedProperty useTimer;
+	SerializedProperty _netAnimClip;
+	SerializedProperty animNum;
     SerializedProperty animationClips;
-    SerializedProperty _animNameList;
-    SerializedProperty _animNameNow;
-    SerializedProperty _textSaveList;
+	SerializedProperty _animNameList;
+	SerializedProperty _animNameNow;
+	SerializedProperty _textSaveList;
     SerializedProperty _gifExportUse;
-    SerializedProperty _gifBGColor;
-    SerializedProperty _gifUseTransparancy;
-    SerializedProperty _gifAlphaBGColor;
-    SerializedProperty _gifDelay;
-    SerializedProperty _gifQuality;
-    SerializedProperty _gifRepeatNum;
+	SerializedProperty _gifBGColor; 
+	SerializedProperty _gifUseTransparancy;
+	SerializedProperty _gifAlphaBGColor;
+    SerializedProperty _gifDelay; 
+	SerializedProperty _gifQuality;
+	SerializedProperty _gifRepeatNum;
 
 
 
@@ -49,9 +53,9 @@ public class SPUM_ExporterEditor : Editor
     float tAnimTimer;
     float tAnimTimerFactor;
     float timeSave;
-    //float tValuee = 0;
-    //bool objectSelectionFoldout = false;
-    //int objectSelectionToolbar = 0;
+    float tValuee = 0 ;
+    bool objectSelectionFoldout = false;
+    int objectSelectionToolbar = 0;
 
     void OnEnable()
     {
@@ -91,7 +95,7 @@ public class SPUM_ExporterEditor : Editor
         _gifRepeatNum = serializedObject.FindProperty("_gifRepeatNum");
 
     }
-
+    
 
     // Start is called before the first frame update
     public override void OnInspectorGUI()
@@ -114,28 +118,28 @@ public class SPUM_ExporterEditor : Editor
 
         float xSize = Handles.GetMainGameViewSize().x;
         float ySize = Handles.GetMainGameViewSize().y;
-
-        if (xSize < 1920f || ySize < 1080)
+        
+        if( xSize < 1920f || ySize < 1080)
         {
             EditorGUILayout.PropertyField(_gifExportUse, new GUIContent("Disable Gif Export"));
-            EditorGUILayout.HelpBox("!!! Please set Game Windows size over the 1920x1080 to use export method !!!", MessageType.Error);
+            EditorGUILayout.HelpBox("!!! Please set Game Windows size over the 1920x1080 to use export method !!!",MessageType.Error);
 
             return;
         }
 
 
-        if (!SPB._gifExportUse)
+        if(!SPB._gifExportUse)
         {
             EditorGUILayout.PropertyField(_gifExportUse, new GUIContent("Enable Gif Export"));
         }
         else
         {
             EditorGUILayout.PropertyField(_gifExportUse, new GUIContent("Disable Gif Export"));
-            EditorGUILayout.HelpBox("Gif Exporter isn't stable now (Preview Version).", MessageType.Warning);
+            EditorGUILayout.HelpBox("Gif Exporter isn't stable now (Preview Version).",MessageType.Warning);
             // EditorGUILayout.IntSlider (_gifQuality, 1, 100, new GUIContent ("Gif Quality"));
             EditorGUILayout.PropertyField(_gifDelay, new GUIContent("Animation Time Delay"));
             // EditorGUILayout.PropertyField(_gifRepeatNum, new GUIContent("Animation Repeat Number"));
-            if (!SPB._gifUseTransparancy)
+            if(!SPB._gifUseTransparancy)
             {
                 EditorGUILayout.PropertyField(_gifUseTransparancy, new GUIContent("Enable Backgrund Transparancy"));
                 // EditorGUILayout.HelpBox("Basic BG Color is white",MessageType.Info);
@@ -149,15 +153,15 @@ public class SPUM_ExporterEditor : Editor
             }
         }
 
-        EditorGUILayout.HelpBox("Adavnced settings only for more options (not recommended)", MessageType.Info);
-        if (!SPB._advanced)
+        EditorGUILayout.HelpBox("Adavnced settings only for more options (not recommended)",MessageType.Info);
+        if(!SPB._advanced)
         {
             EditorGUILayout.PropertyField(_advanced, new GUIContent("Advanced Settings Show"));
         }
         else
         {
             EditorGUILayout.PropertyField(_advanced, new GUIContent("Advanced Settings Off"));
-            EditorGUILayout.HelpBox("Editing is not recommended.", MessageType.Warning);
+            EditorGUILayout.HelpBox("Editing is not recommended.",MessageType.Warning);
             EditorGUILayout.PropertyField(_camera);
             EditorGUILayout.PropertyField(_anim);
             EditorGUILayout.PropertyField(_objectPivot);
@@ -176,15 +180,15 @@ public class SPUM_ExporterEditor : Editor
             EditorGUILayout.PropertyField(_textSaveList);
         }
 
-
+        
 
         serializedObject.ApplyModifiedProperties();
 
+    
 
-
-        if (GUILayout.Button("Make Sprite Images", GUILayout.Height(50)))
+        if (GUILayout.Button("Make Sprite Images",GUILayout.Height(50))) 
         {
-            if (!SPB.useTimer)
+            if(!SPB.useTimer)
             {
                 Debug.Log("Starting Export Sprite Sheets...");
                 SPB.StartExport();
@@ -195,51 +199,51 @@ public class SPUM_ExporterEditor : Editor
             }
         }
 
-        if (SPB._unitPrefab != null)
+        if(SPB._unitPrefab!=null)
         {
-            if (GUILayout.Button("Remove Object", GUILayout.Height(50)))
+            if (GUILayout.Button("Remove Object",GUILayout.Height(50))) 
             {
                 Debug.Log("Removed Prefab Object!!");
                 SPB._unitPrefab = null;
                 SPB._imageName = "";
             }
         }
-        SPB._imgBG.sizeDelta = new Vector2(SPB._imageSize.x, SPB._imageSize.y);
-        if (SPB._unitPrefab == null)
+        SPB._imgBG.sizeDelta = new Vector2( SPB._imageSize.x, SPB._imageSize.y );
+        if(SPB._unitPrefab==null)
         {
             SPB.CheckObjNow();
         }
         else
         {
             SPB.MakeObjNow();
-            SPB._objectPivot.transform.localScale = new Vector3(SPB._scaleFactor, SPB._scaleFactor, SPB._scaleFactor);
+            SPB._objectPivot.transform.localScale = new Vector3(SPB._scaleFactor,SPB._scaleFactor,SPB._scaleFactor);
         }
 
-        if (SPB.useTimer)
+        if(SPB.useTimer)
         {
             float tTimer = Time.realtimeSinceStartup - timeSave;
             timeSave = Time.realtimeSinceStartup;
             SPB.timer += tTimer;
 
-            if (SPB.timer > SPB.timerForSave)
+            if(SPB.timer > SPB.timerForSave)
             {
                 tValue += tAnimTimerFactor;
-
+                
                 SPB.timer = 0;
                 SPB.frameNowNumber++;
-                if (SPB.frameNowNumber >= SPB._frameNumber)
+                if(SPB.frameNowNumber >= SPB._frameNumber)
                 {
                     SPB.frameNowNumber = 0;
                     tValue = 0;
                     SPB.animNum++;
                     SPB.useTimer = false;
-                    if (SPB._separated)
+                    if(SPB._separated) 
                     {
                         SPB._sepaName = tAnimSave.name;
                     }
-                    if (SPB.animNum < SPB._animNameNow.Count)
+                    if(SPB.animNum < SPB._animNameNow.Count)
                     {
-                        if (SPB._separated) SPB.MakeScreenShotFile();
+                        if(SPB._separated) SPB.MakeScreenShotFile();
                         SPB._netAnimClip = true;
                     }
                     else
@@ -248,40 +252,40 @@ public class SPUM_ExporterEditor : Editor
                         SPB.PrintEndMessage();
                     }
                 }
-
-                if (SPB.animNum >= SPB._animNameNow.Count)
+                
+                if(SPB.animNum >= SPB._animNameNow.Count)
                 {
                     ExporterReset();
                     SPB.MakeGifAnimation();
                 }
-                else
+                else 
                 {
                     ExporterShot();
                     SPB.SetScreenShot();
                 }
-
+                
             }
         }
 
-        if (SPB._netAnimClip)
+        if(SPB._netAnimClip)
         {
             SPB._netAnimClip = false;
             AnimationClip tAnim = null;
-            foreach (var obj in SPB.animationClips)
+            foreach( var obj in SPB.animationClips)
             {
-                if (obj.name == SPB._animNameNow[SPB.animNum])
+                if(obj.name == SPB._animNameNow[SPB.animNum])
                 {
                     tAnim = obj;
                 }
             }
-
-            if (tAnim == null) return;
+            
+            if(tAnim == null) return;
 
             tAnimSave = tAnim;
             tAnimTimer = tAnimSave.length;
-            tAnimTimerFactor = 1f / (SPB._frameRate * 1f);
+            tAnimTimerFactor = 1f / (SPB._frameRate*1f);
             SPB._frameNumber = (int)(tAnimTimer / tAnimTimerFactor);
-            Debug.Log("[[Generating : " + tAnimSave.name + " || Time Length : " + tAnimSave.length + " sec " + "|| Frame Numbers : " + SPB._frameNumber + "]]");
+            Debug.Log("[[Generating : "+ tAnimSave.name + " || Time Length : " + tAnimSave.length + " sec " + "|| Frame Numbers : "+ SPB._frameNumber+"]]");
             SPB.frameNowNumber = 0;
             tValue = 0;
             SPB.timer = 0;
@@ -298,7 +302,7 @@ public class SPUM_ExporterEditor : Editor
     {
         AnimationMode.StartAnimationMode();
         AnimationMode.BeginSampling();
-        AnimationMode.SampleAnimationClip(SPB._anim.gameObject, tAnimSave, tValue);
+        AnimationMode.SampleAnimationClip(SPB._anim.gameObject,tAnimSave,tValue);
         AnimationMode.EndSampling();
     }
 
@@ -306,7 +310,7 @@ public class SPUM_ExporterEditor : Editor
     {
         AnimationMode.StartAnimationMode();
         AnimationMode.BeginSampling();
-        AnimationMode.SampleAnimationClip(SPB._objectNow, tAnimSave, 0);
+        AnimationMode.SampleAnimationClip(SPB._objectNow,tAnimSave,0);
         AnimationMode.EndSampling();
         AnimationMode.StopAnimationMode();
     }

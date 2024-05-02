@@ -1,16 +1,27 @@
 using UnityEngine;
 
+public enum PlayerState
+{
+    Idle,
+    Attack,
+    Dead,
+}
+
 public class PlayerController : MonoBehaviour
 {
-    private Joystick stick;
+    [SerializeField] private Joystick stick;
     [SerializeField] private float speed;
 
-    private void Start()
+    [Space(10)]
+    private PlayerState playerState;
+    [SerializeField] private Animator animator;
+
+    private void Update()
     {
-        stick = GameObject.Find("Joystick").GetComponent<Joystick>();
+        PlayerMove();
     }
 
-    void Update()
+    private void PlayerMove()
     {
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
         dir.Normalize();

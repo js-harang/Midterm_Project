@@ -18,22 +18,17 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            switch (SceneManager.GetActiveScene().name)
-            {
-                case "01_Start":
-                    sm.popupUIActive = !sm.popupUIActive;
-                    break;
-                case "02_Main":
-                    break;
-            }
-        }
-    }
-
-    public void GameStartBtn()
-    {
-        sm.ChangeScene("02_Main");
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    switch (SceneManager.GetActiveScene().name)
+        //    {
+        //        case "01_Start":
+        //            sm.popupUIActive = !sm.popupUIActive;
+        //            break;
+        //        case "02_Main":
+        //            break;
+        //    }
+        //}
     }
 
     public void Speed2X()
