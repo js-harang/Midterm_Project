@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
 
     [Space(10)]
-    private PlayerState playerState;
+    [SerializeField] private PlayerState playerState;
     [SerializeField] private Animator animator;
 
     private void Update()
@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
-
         if (stick.Horizontal > 0)
             gameObject.transform.rotation = Quaternion.Euler(0, 180f, 0);
         else if (stick.Horizontal < 0)
