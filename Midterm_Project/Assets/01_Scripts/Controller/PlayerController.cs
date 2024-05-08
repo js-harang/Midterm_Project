@@ -3,6 +3,7 @@ using UnityEngine;
 public enum PlayerState
 {
     Idle,
+    Run,
     Attack,
     Dead,
 }
@@ -18,11 +19,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        PlayerMove();
+        if (playerState != PlayerState.Dead)
+        {
+            PlayerMove();
+        }
     }
 
     private void PlayerMove()
     {
+        playerState = PlayerState.Run;
+
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
