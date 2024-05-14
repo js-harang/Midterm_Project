@@ -2079,12 +2079,12 @@ public class SPUM_Manager : MonoBehaviour
                     _unitObjSet._version = _version;
                     _unitObjSet._code = tST._code;
 
-                    bool _bodyDataCheck = false;
+                    //bool _bodyDataCheck = false;
                     for(var i = 0 ; i <tST._spriteOBj._bodyList.Count; i++)
                     {
                         if(tST._spriteOBj._bodyList[i]==null)
                         {
-                            _bodyDataCheck = true;
+                            //_bodyDataCheck = true;
                         }
                     }
 
@@ -2680,7 +2680,7 @@ public class SPUM_Manager : MonoBehaviour
     
     public void InstallSpriteData()
     {
-        bool Chk = false;
+        //bool Chk = false;
         //기본 폴더 제작
         if(Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Items"))
         {

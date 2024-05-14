@@ -27,7 +27,13 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMove()
     {
-        playerState = PlayerState.Run;
+        if (Input.touchCount != 0 || Input.GetMouseButtonDown(0) == true)
+        {
+            playerState = PlayerState.Run;
+            if (playerState == PlayerState.Run)
+                animator.SetFloat("RunState", 0.5f);
+
+        }
 
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
         dir.Normalize();
