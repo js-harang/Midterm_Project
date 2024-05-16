@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    private GameManager gm;
-    private ScreenManager sm;
+    private GameManager gameManager;
+    private ScreenManager screenManager;
 
     private int gameSpeed = 1;
     [SerializeField] private GameObject speed1X;
@@ -12,8 +12,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        gm = GameManager.instance;
-        sm = ScreenManager.instance;
+        gameManager = GameManager.instance;
+        screenManager = ScreenManager.instance;
     }
 
     private void Update()

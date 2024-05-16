@@ -23,18 +23,19 @@ public class PlayerController : MonoBehaviour
         {
             PlayerMove();
         }
+
+        AnimationUpdtae();
     }
 
     private void PlayerMove()
     {
-        if (Input.touchCount != 0 || Input.GetMouseButtonDown(0) == true)
+        if (stick.Horizontal == 0 && stick.Vertical == 0)
         {
-            playerState = PlayerState.Run;
-            if (playerState == PlayerState.Run)
-                animator.SetFloat("RunState", 0.5f);
-
+            playerState = PlayerState.Idle;
+            return;
         }
 
+        playerState = PlayerState.Run;
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
@@ -42,5 +43,22 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.rotation = Quaternion.Euler(0, 180f, 0);
         else if (stick.Horizontal < 0)
             gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void AnimationUpdtae()
+    {
+        switch (playerState)
+        {
+            case PlayerState.Idle:
+                animator.SetFloat("RunState", 0);
+                break;
+            case PlayerState.Run:
+                animator.SetFloat("RunState", 0.5f);
+                break;
+            case PlayerState.Attack:
+                break;
+            case PlayerState.Dead:
+                break;
+        }
     }
 }
