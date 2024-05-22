@@ -10,21 +10,28 @@ public enum PlayerState
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Joystick stick;
-    [SerializeField] private float speed;
+    [SerializeField] Joystick stick;
+    [SerializeField] float speed;
 
     [Space(10)]
-    [SerializeField] private PlayerState playerState;
-    [SerializeField] private Animator animator;
+    [SerializeField] PlayerState playerState;
+    [SerializeField] Animator animator;
 
     private void Update()
     {
         if (playerState != PlayerState.Dead)
-        {
             PlayerMove();
-        }
 
         AnimationUpdtae();
+    }
+
+    private void OnBecameInvisible()
+    {
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+        viewPos.x = Mathf.Clamp01(viewPos.x);
+        viewPos.y = Mathf.Clamp01(viewPos.y);
+        Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewPos);
+        transform.position = worldPos;
     }
 
     private void PlayerMove()
@@ -39,6 +46,7 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
+
         if (stick.Horizontal > 0)
             gameObject.transform.rotation = Quaternion.Euler(0, 180f, 0);
         else if (stick.Horizontal < 0)

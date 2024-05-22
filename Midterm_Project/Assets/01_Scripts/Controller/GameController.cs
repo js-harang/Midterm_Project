@@ -1,14 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    private GameManager gameManager;
-    private ScreenManager screenManager;
+    GameManager gameManager;
+    ScreenManager screenManager;
 
-    private int gameSpeed = 1;
-    [SerializeField] private GameObject speed1X;
-    [SerializeField] private GameObject speed2X;
+    int gameSpeed = 1;
+    [SerializeField] GameObject speed1X;
+    [SerializeField] GameObject speed2X;
 
     private void Start()
     {

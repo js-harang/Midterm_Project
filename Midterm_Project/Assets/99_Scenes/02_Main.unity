@@ -672,7 +672,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57cd554b8181d7546a108d0c83d8693f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 855705156}
   target: {fileID: 6665435736158942855}
+  cameraMoveSpeed: 1
 --- !u!1 &258613251
 GameObject:
   m_ObjectHideFlags: 0

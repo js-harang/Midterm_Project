@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class StartSceneController : MonoBehaviour
 {
-    private ScreenManager sm;
+    ScreenManager sm;
 
     [Space(10f)]
-    [SerializeField] private LoopType loopType;
-    private TextMeshProUGUI text;
+    [SerializeField] LoopType loopType;
+    TextMeshProUGUI text;
 
     private void Start()
     {

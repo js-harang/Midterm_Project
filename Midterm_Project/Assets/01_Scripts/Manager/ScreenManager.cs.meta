@@ -3,7 +3,12 @@ guid: 3539bf334a93032438520fd082f3ee81
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - popupUI: {instanceID: 0}
+  - fadeImg: {instanceID: 0}
+  - loadingUI: {instanceID: 0}
+  - loadingBar: {instanceID: 0}
+  - loadingText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

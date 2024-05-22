@@ -24,15 +24,15 @@ public class ScreenManager : MonoBehaviour
     public GameObject popupUI;
     public bool popupUIActive = false;
 
-    [SerializeField] private CanvasGroup fadeImg;
+    [SerializeField] CanvasGroup fadeImg;
     [Space(10f)]
-    [SerializeField] private GameObject loadingUI;
-    [SerializeField] private Slider loadingBar;
-    [SerializeField] private TMP_Text loadingText;
+    [SerializeField] GameObject loadingUI;
+    [SerializeField] Slider loadingBar;
+    [SerializeField] TMP_Text loadingText;
 
-    private float fadeDuration = 1.0f;
+    float fadeDuration = 1.0f;
 
-    void Start()
+    private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
