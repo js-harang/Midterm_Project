@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-    [SerializeField] private Material backgroundMaterial;
+    [SerializeField]
+    private Material backgroundMaterial;
+
     [Space(10f)]
-    [SerializeField] private float scrollSpeed;
+
+    [SerializeField]
+    private float scrollSpeed;
 
     private void Update()
     {

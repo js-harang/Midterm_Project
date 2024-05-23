@@ -7,7 +7,9 @@ public class StartSceneController : MonoBehaviour
     ScreenManager sm;
 
     [Space(10f)]
-    [SerializeField] LoopType loopType;
+
+    [SerializeField]
+    LoopType loopType;
     TextMeshProUGUI text;
 
     private void Start()

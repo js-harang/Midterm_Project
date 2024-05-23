@@ -1447,8 +1447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3539bf334a93032438520fd082f3ee81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupUI: {fileID: 0}
-  popupUIActive: 0
   fadeImg: {fileID: 8127281580802479931}
   loadingUI: {fileID: 8127281581405365762}
   loadingBar: {fileID: 8127281581677663548}

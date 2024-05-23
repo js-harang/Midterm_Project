@@ -10,12 +10,20 @@ public enum PlayerState
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Joystick stick;
-    [SerializeField] float speed;
+    [SerializeField]
+    PlayerState playerState;
 
     [Space(10)]
-    [SerializeField] PlayerState playerState;
-    [SerializeField] Animator animator;
+
+    [SerializeField]
+    Joystick stick;
+    [SerializeField]
+    Animator animator;
+
+    [Space(10)]
+
+    [SerializeField]
+    float speed;
 
     private void Update()
     {
@@ -25,14 +33,14 @@ public class PlayerController : MonoBehaviour
         AnimationUpdtae();
     }
 
-    private void OnBecameInvisible()
-    {
-        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
-        viewPos.x = Mathf.Clamp01(viewPos.x);
-        viewPos.y = Mathf.Clamp01(viewPos.y);
-        Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewPos);
-        transform.position = worldPos;
-    }
+    //private void OnBecameInvisible()
+    //{
+    //    Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+    //    viewPos.x = Mathf.Clamp01(viewPos.x);
+    //    viewPos.y = Mathf.Clamp01(viewPos.y);
+    //    Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewPos);
+    //    transform.position = worldPos;
+    //}
 
     private void PlayerMove()
     {
@@ -43,6 +51,7 @@ public class PlayerController : MonoBehaviour
         }
 
         playerState = PlayerState.Run;
+
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
         dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
@@ -51,6 +60,13 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.rotation = Quaternion.Euler(0, 180f, 0);
         else if (stick.Horizontal < 0)
             gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        if (pos.x < 0.05f) pos.x = 0.05f;
+        if (pos.x > 0.95f) pos.x = 0.95f;
+        if (pos.y < 0.15f) pos.y = 0.15f;
+        if (pos.y > 0.85f) pos.y = 0.85f;
+        transform.position = Camera.main.ViewportToWorldPoint(pos);
     }
 
     private void AnimationUpdtae()

@@ -21,14 +21,17 @@ public class ScreenManager : MonoBehaviour
         }
     }
 
-    public GameObject popupUI;
-    public bool popupUIActive = false;
+    [SerializeField]
+    CanvasGroup fadeImg;
 
-    [SerializeField] CanvasGroup fadeImg;
     [Space(10f)]
-    [SerializeField] GameObject loadingUI;
-    [SerializeField] Slider loadingBar;
-    [SerializeField] TMP_Text loadingText;
+
+    [SerializeField]
+    GameObject loadingUI;
+    [SerializeField]
+    Slider loadingBar;
+    [SerializeField]
+    TMP_Text loadingText;
 
     float fadeDuration = 1.0f;
 

@@ -2,11 +2,17 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] GameObject background;
+    [SerializeField]
+    GameObject background;
 
-    [SerializeField] GameObject target;
+    [SerializeField]
+    GameObject target;
     private Vector3 cameraPosition = new Vector3(0, 0, -10);
-    [SerializeField] float cameraMoveSpeed;
+
+    [Space(10)]
+
+    [SerializeField]
+    float cameraMoveSpeed;
 
     float width;
     float height;

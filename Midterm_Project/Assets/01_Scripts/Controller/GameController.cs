@@ -6,8 +6,10 @@ public class GameController : MonoBehaviour
     ScreenManager screenManager;
 
     int gameSpeed = 1;
-    [SerializeField] GameObject speed1X;
-    [SerializeField] GameObject speed2X;
+    [SerializeField]
+    GameObject speed1X;
+    [SerializeField]
+    GameObject speed2X;
 
     private void Start()
     {
@@ -40,6 +42,6 @@ public class GameController : MonoBehaviour
         speed1X.SetActive(gameSpeed == 1);
         speed2X.SetActive(gameSpeed == 2);
 
-        Time.timeScale = 1f * gameSpeed;
+        Time.timeScale = 1 * gameSpeed;
     }
 }
