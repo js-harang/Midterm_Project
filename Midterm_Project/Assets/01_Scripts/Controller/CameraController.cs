@@ -9,9 +9,7 @@ public class CameraController : MonoBehaviour
     GameObject target;
     private Vector3 cameraPosition = new Vector3(0, 0, -10);
 
-    [Space(10)]
-
-    [SerializeField]
+    [SerializeField, Space(10)]
     float cameraMoveSpeed;
 
     float width;

@@ -13,16 +13,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     PlayerState playerState;
 
-    [Space(10)]
-
-    [SerializeField]
+    [SerializeField, Space(10)]
     Joystick stick;
     [SerializeField]
     Animator animator;
 
-    [Space(10)]
-
-    [SerializeField]
+    [SerializeField, Space(10)]
     float speed;
 
     private void Update()

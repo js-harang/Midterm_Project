@@ -24,9 +24,7 @@ public class ScreenManager : MonoBehaviour
     [SerializeField]
     CanvasGroup fadeImg;
 
-    [Space(10f)]
-
-    [SerializeField]
+    [SerializeField, Space(10)]
     GameObject loadingUI;
     [SerializeField]
     Slider loadingBar;
