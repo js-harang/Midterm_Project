@@ -8,7 +8,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     GameObject target;
     private Vector3 cameraPosition = new Vector3(0, 0, -10);
-
     [SerializeField, Space(10)]
     float cameraMoveSpeed;
 
