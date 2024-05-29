@@ -29,10 +29,15 @@ public class PlayerController : MonoBehaviour
 
     Animator animator;
 
+    private void Start()
+    {
+        playerState = PlayerState.Idle;
+
+        animator = transform.GetComponentInChildren<Animator>();
+    }
+
     private void Update()
     {
-        animator = transform.GetComponentInChildren<Animator>();
-
         if (playerState == PlayerState.Dead)
             return;
 

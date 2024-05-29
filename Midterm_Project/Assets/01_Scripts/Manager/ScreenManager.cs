@@ -7,15 +7,15 @@ using UnityEngine.UI;
 
 public class ScreenManager : MonoBehaviour
 {
-    public static ScreenManager instance = null;
+    public static ScreenManager screenManager = null;
 
     private void Awake()
     {
-        if (instance != null)
-            Destroy(gameObject);
+        if (screenManager != null)
+            Destroy(this);
         else
         {
-            instance = this;
+            screenManager = this;
 
             DontDestroyOnLoad(gameObject);
         }
@@ -45,8 +45,8 @@ public class ScreenManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
         => fadeImg.DOFade(1, fadeDuration)
-            .OnStart(() => { fadeImg.blocksRaycasts = true; })
-            .OnComplete(() => { StartCoroutine(LoadScene(sceneName)); });
+                  .OnStart(() => { fadeImg.blocksRaycasts = true; })
+                  .OnComplete(() => { StartCoroutine(LoadScene(sceneName)); });
 
     IEnumerator LoadScene(string sceneName)
     {
@@ -81,6 +81,6 @@ public class ScreenManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         => fadeImg.DOFade(0, fadeDuration)
-            .OnStart(() => { loadingUI.SetActive(false); })
-            .OnComplete(() => { fadeImg.blocksRaycasts = false; });
+                  .OnStart(() => { loadingUI.SetActive(false); })
+                  .OnComplete(() => { fadeImg.blocksRaycasts = false; });
 }

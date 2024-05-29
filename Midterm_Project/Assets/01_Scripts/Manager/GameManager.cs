@@ -1,18 +1,35 @@
 using UnityEngine;
 
+public enum GameState
+{
+    Title,
+    Playing,
+    GameOver,
+}
+
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    [SerializeField]
+    GameState gameState;
+
+    public static GameManager gameManager = null;
 
     private void Awake()
     {
-        if (instance != null)
+        if (gameManager != null)
             Destroy(this);
         else
         {
-            instance = this;
+            gameManager = this;
 
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+    public int enemyMaxCount;
+
+    private void Start()
+    {
+        gameState = GameState.Title;
     }
 }

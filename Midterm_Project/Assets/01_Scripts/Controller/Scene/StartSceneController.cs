@@ -6,16 +6,14 @@ public class StartSceneController : MonoBehaviour
 {
     ScreenManager sm;
 
-    [SerializeField, Space(10)]
-    LoopType loopType;
     TextMeshProUGUI text;
 
     private void Start()
     {
-        sm = ScreenManager.instance;
+        sm = ScreenManager.screenManager;
 
         text = GameObject.Find("TouchToStart").GetComponent<TextMeshProUGUI>();
-        text.DOFade(0, 1.5f).SetLoops(-1, loopType);
+        text.DOFade(0, 1.5f).SetLoops(-1, LoopType.Yoyo);
     }
 
     private void Update()

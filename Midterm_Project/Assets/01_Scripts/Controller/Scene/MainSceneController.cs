@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class MainSceneController : MonoBehaviour
 {
     GameManager gameManager;
     ScreenManager screenManager;
@@ -13,8 +13,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.instance;
-        screenManager = ScreenManager.instance;
+        gameManager = GameManager.gameManager;
+        screenManager = ScreenManager.screenManager;
     }
 
     private void Update()
