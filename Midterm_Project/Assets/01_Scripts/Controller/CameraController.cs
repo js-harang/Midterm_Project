@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]
-    GameObject background;
+    [SerializeField, Space(10)]
+    Transform background;
 
     [SerializeField]
-    GameObject target;
+    Transform target;
     private Vector3 cameraPosition = new Vector3(0, 0, -10);
     [SerializeField, Space(10)]
     float cameraMoveSpeed;
@@ -22,23 +22,23 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        CameraUpdate();
+        CameraPositionUpdate();
     }
 
-    private void CameraUpdate()
+    private void CameraPositionUpdate()
     {
         gameObject.transform.position = Vector3.Lerp(transform.position,
-                                                     target.transform.position + cameraPosition,
+                                                     target.position + cameraPosition,
                                                      Time.deltaTime * cameraMoveSpeed);
 
-        float limitX = background.transform.localScale.x / 2 - width;
+        float limitX = background.localScale.x / 2 - width;
         float clampX = Mathf.Clamp(transform.position.x,
-                                  background.transform.position.x - limitX,
-                                  background.transform.position.x + limitX);
-        float limitY = background.transform.localScale.y / 2 - height;
+                                  background.position.x - limitX,
+                                  background.position.x + limitX);
+        float limitY = background.localScale.y / 2 - height;
         float clampY = Mathf.Clamp(transform.position.y,
-                                  background.transform.position.y - limitY,
-                                  background.transform.position.y + limitY);
+                                  background.position.y - limitY,
+                                  background.position.y + limitY);
 
         transform.position = new Vector3(clampX, clampY, -10f);
     }

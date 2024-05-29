@@ -6,7 +6,7 @@ public class MainSceneController : MonoBehaviour
     ScreenManager screenManager;
 
     int gameSpeed = 1;
-    [SerializeField]
+    [SerializeField, Space(10)]
     GameObject speed1X;
     [SerializeField]
     GameObject speed2X;
@@ -19,17 +19,7 @@ public class MainSceneController : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    switch (SceneManager.GetActiveScene().name)
-        //    {
-        //        case "01_Start":
-        //            sm.popupUIActive = !sm.popupUIActive;
-        //            break;
-        //        case "02_Main":
-        //            break;
-        //    }
-        //}
+
     }
 
     public void Speed2X()

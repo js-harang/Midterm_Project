@@ -21,7 +21,7 @@ public class ScreenManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
+    [SerializeField, Space(10)]
     CanvasGroup fadeImg;
 
     [SerializeField, Space(10)]

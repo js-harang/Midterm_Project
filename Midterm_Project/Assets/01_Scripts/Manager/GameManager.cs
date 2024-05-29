@@ -9,7 +9,7 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Space(10)]
     GameState gameState;
 
     public static GameManager gameManager = null;

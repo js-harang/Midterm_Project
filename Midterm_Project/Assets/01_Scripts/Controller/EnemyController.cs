@@ -1,21 +1,39 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EnemyState
 {
     Run,
     Attack,
-    Dead,
+    Death,
 }
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField]
-    EnemyState enemyState;
+    [SerializeField, Space(10)]
+    PlayerController playerController;
 
     [SerializeField, Space(10)]
-    GameObject player;
+    EnemyState enemyState;
+
+    int hp;
+    [SerializeField, Space(10)]
+    int maxHp;
     [SerializeField]
+    Slider hpSlider;
+    [SerializeField]
+    int damage;
+
+    [SerializeField, Space(10)]
+    float moveSpeed;
+    Transform player;
+
+    [SerializeField, Space(10)]
     float attackDistance;
+    [SerializeField]
+    float attackDelay;
+    float currentTime;
 
     Animator animator;
 
@@ -24,10 +42,21 @@ public class EnemyController : MonoBehaviour
         enemyState = EnemyState.Run;
 
         animator = transform.GetComponentInChildren<Animator>();
+
+        hp = maxHp;
+
+        player = GameObject.Find("Player").transform;
+
+        currentTime = attackDelay;
     }
 
     private void Update()
     {
+        if (playerController.playerState == PlayerState.Death)
+            return;
+
+        hpSlider.value = (float)hp / (float)maxHp;
+
         switch (enemyState)
         {
             case EnemyState.Run:
@@ -36,7 +65,7 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Attack:
                 Attack();
                 break;
-            case EnemyState.Dead:
+            case EnemyState.Death:
                 Dead();
                 break;
         }
@@ -44,47 +73,60 @@ public class EnemyController : MonoBehaviour
 
     private void Run()
     {
-        if(Vector3.Distance(transform.position, player.transform.position) < attackDistance)
+        // Run -> Attack
+        if (Vector3.Distance(transform.position, player.position) < attackDistance)
         {
             enemyState = EnemyState.Attack;
+            animator.SetTrigger("RunToAttack");
+            return;
+        }
+        // Run -> Death
+        else if (hp <= 0)
+        {
+            enemyState = EnemyState.Death;
+            animator.SetTrigger("ToDeath");
             return;
         }
 
-        Vector3 dir = (player.transform.position - transform.position).normalized;
-
-
-
-        //if (Vector3.Distance(transform.position, originPos) > moveDistance)
-        //{
-        //    enemyState = EnemyState.Return;
-        //    print("상태 전환 : Move -> Return");
-        //}
-        //else if (Vector3.Distance(transform.position, player.position) > attackDistance)
-        //{
-        //    Vector3 dir = (player.position - transform.position).normalized;
-
-        //    cc.Move(dir * moveSpeed * Time.deltaTime);
-
-        //    transform.forward = dir;
-        //}
-        //else
-        //{
-        //    enemyState = EnemyState.Attack;
-        //    print("상태 전환 : Move -> Attack");
-
-        //    currentTime = attackDelay;
-
-        //    anim.SetTrigger("MoveToAttackDelay");
-        //}
+        Vector3 dir = player.position - transform.position;
+        dir.Normalize();
+        transform.Translate(dir * moveSpeed * Time.deltaTime);
     }
 
     private void Attack()
     {
+        // Attack -> Run
+        if (Vector3.Distance(transform.position, player.position) > attackDistance)
+        {
+            enemyState = EnemyState.Run;
+            animator.SetTrigger("AttackToRun");
+            return;
+        }
+        // Attack -> Death
+        else if (hp <= 0)
+        {
+            enemyState = EnemyState.Death;
+            animator.SetTrigger("ToDeath");
+            return;
+        }
 
+        currentTime += Time.deltaTime;
+        if (currentTime > attackDelay)
+        {
+            currentTime = 0;
+
+            animator.SetTrigger("StartAttack");
+        }
     }
 
     private void Dead()
     {
+        StartCoroutine(DeathProcess());
+    }
 
+    IEnumerator DeathProcess()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(this);
     }
 }

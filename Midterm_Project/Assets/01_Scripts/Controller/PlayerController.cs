@@ -1,17 +1,28 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PlayerState
 {
     Idle,
     Run,
     Attack,
-    Dead,
+    Death,
 }
 
 public class PlayerController : MonoBehaviour
 {
+    [Space(10)]
+    public PlayerState playerState;
+
+    int hp;
+    [SerializeField, Space(10)]
+    int maxHp;
     [SerializeField]
-    PlayerState playerState;
+    Slider hpSlider;
+    [SerializeField]
+    Slider mpSlider;
+    [SerializeField]
+    int damage;
 
     [SerializeField, Space(10)]
     Joystick stick;
@@ -21,10 +32,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Space(10)]
     float attackDistance;
 
-    [SerializeField, Space(10)]
-    int damage;
     float currentTime;
-    [SerializeField]
+    [SerializeField, Space(10)]
     float attackDelay;
 
     Animator animator;
@@ -34,12 +43,18 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.Idle;
 
         animator = transform.GetComponentInChildren<Animator>();
+
+        hp = maxHp;
+
+        currentTime = attackDelay;
     }
 
     private void Update()
     {
-        if (playerState == PlayerState.Dead)
+        if (playerState == PlayerState.Death)
             return;
+
+        hpSlider.value = (float)hp / (float)maxHp;
 
         switch (playerState)
         {
@@ -52,7 +67,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Attack:
                 Attack();
                 break;
-            case PlayerState.Dead:
+            case PlayerState.Death:
                 Dead();
                 break;
         }
@@ -79,6 +94,13 @@ public class PlayerController : MonoBehaviour
         {
             playerState = PlayerState.Idle;
             animator.SetFloat("State", 0);
+            return;
+        }
+        // Run -> Death
+        else if (hp <= 0)
+        {
+            playerState = PlayerState.Death;
+            animator.SetTrigger("ToDeath");
             return;
         }
 
@@ -113,6 +135,12 @@ public class PlayerController : MonoBehaviour
             currentTime = 0;
 
             animator.SetTrigger("StartAttack");
+        }
+        else if (hp <= 0)
+        {
+            playerState = PlayerState.Death;
+            animator.SetTrigger("ToDeath");
+            return;
         }
     }
 

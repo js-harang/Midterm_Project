@@ -5,7 +5,10 @@ public class CreateEnemy : MonoBehaviour
 {
     GameManager gameManager;
 
-    [SerializeField]
+    [SerializeField, Space(10)]
+    Transform cameraTransform;
+
+    [SerializeField, Space(10)]
     GameObject enemyPrefap;
     List<GameObject> enemyObjectPool;
 
@@ -27,10 +30,17 @@ public class CreateEnemy : MonoBehaviour
 
     private void Update()
     {
+        CreateZonePositionUpdate();
+
         if (enemyObjectPool.Count == 0)
             return;
 
         EnemyCreate();
+    }
+
+    private void CreateZonePositionUpdate()
+    {
+        transform.position = cameraTransform.position + new Vector3(0, 0, 10f);
     }
 
     private void EnemyCreate()
