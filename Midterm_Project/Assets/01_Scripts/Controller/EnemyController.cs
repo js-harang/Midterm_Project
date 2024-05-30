@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public enum EnemyState
 {
+    Idle,
     Run,
     Attack,
     Death,
@@ -11,11 +12,10 @@ public enum EnemyState
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField, Space(10)]
-    PlayerController playerController;
+    PlayerController pc;
 
-    [SerializeField, Space(10)]
-    EnemyState enemyState;
+    [Space(10)]
+    public EnemyState enemyState;
 
     int hp;
     [SerializeField, Space(10)]
@@ -35,27 +35,37 @@ public class EnemyController : MonoBehaviour
     float attackDelay;
     float currentTime;
 
+    [SerializeField, Space(10)]
+    int money;
+    [SerializeField]
+    float exp;
+
     Animator animator;
 
     private void Start()
     {
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+
         enemyState = EnemyState.Run;
 
         animator = transform.GetComponentInChildren<Animator>();
+        player = GameObject.Find("Player").transform;
 
         hp = maxHp;
-
-        player = GameObject.Find("Player").transform;
+        hpSlider.value = (float)hp / maxHp;
 
         currentTime = attackDelay;
     }
 
     private void Update()
     {
-        if (playerController.playerState == PlayerState.Death)
+        if (pc.playerState == PlayerState.Death)
+        {
+            Idle();
             return;
+        }
 
-        hpSlider.value = (float)hp / (float)maxHp;
+        hpSlider.value = (float)hp / maxHp;
 
         switch (enemyState)
         {
@@ -65,10 +75,13 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Attack:
                 Attack();
                 break;
-            case EnemyState.Death:
-                Dead();
-                break;
         }
+    }
+
+    private void Idle()
+    {
+        enemyState = EnemyState.Idle;
+        animator.SetTrigger("ToIdle");
     }
 
     private void Run()
@@ -78,13 +91,6 @@ public class EnemyController : MonoBehaviour
         {
             enemyState = EnemyState.Attack;
             animator.SetTrigger("RunToAttack");
-            return;
-        }
-        // Run -> Death
-        else if (hp <= 0)
-        {
-            enemyState = EnemyState.Death;
-            animator.SetTrigger("ToDeath");
             return;
         }
 
@@ -102,19 +108,11 @@ public class EnemyController : MonoBehaviour
             animator.SetTrigger("AttackToRun");
             return;
         }
-        // Attack -> Death
-        else if (hp <= 0)
-        {
-            enemyState = EnemyState.Death;
-            animator.SetTrigger("ToDeath");
-            return;
-        }
 
         currentTime += Time.deltaTime;
         if (currentTime > attackDelay)
         {
             currentTime = 0;
-
             animator.SetTrigger("StartAttack");
         }
     }
@@ -128,5 +126,24 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Destroy(this);
+    }
+
+    public void AttackAction()
+    {
+        pc.DamageAction(damage);
+    }
+
+    public void DamageAction(int playerDamage)
+    {
+        hp -= playerDamage;
+        hpSlider.value = (float)hp / maxHp;
+
+        // AnyState -> Death
+        if (hp <= 0)
+        {
+            enemyState = EnemyState.Death;
+            animator.SetTrigger("ToDeath");
+            Dead();
+        }
     }
 }

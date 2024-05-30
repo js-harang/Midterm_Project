@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CreateEnemy : MonoBehaviour
 {
-    GameManager gameManager;
+    GameManager gm;
 
     [SerializeField, Space(10)]
     Transform cameraTransform;
@@ -17,10 +17,10 @@ public class CreateEnemy : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.gameManager;
+        gm = GameManager.gameManager;
 
         enemyObjectPool = new List<GameObject>();
-        for (int i = 0; i < gameManager.enemyMaxCount; i++)
+        for (int i = 0; i < gm.enemyMaxCount; i++)
         {
             GameObject enemy = Instantiate(enemyPrefap);
             enemyObjectPool.Add(enemy);

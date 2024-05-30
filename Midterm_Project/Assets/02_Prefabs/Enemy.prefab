@@ -768,9 +768,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1577960346039090966}
   - component: {fileID: 5642752608682289462}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -804,7 +804,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21321281c490aef40b9d1c3a8ad34c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
   enemyState: 0
   maxHp: 100
   hpSlider: {fileID: 5642752608405083635}
@@ -812,6 +811,8 @@ MonoBehaviour:
   moveSpeed: 1
   attackDistance: 1.75
   attackDelay: 2
+  money: 0
+  exp: 0
 --- !u!1 &1816393383395266585
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,6 +1486,7 @@ GameObject:
   - component: {fileID: 1431777338199154872}
   - component: {fileID: 3551079207235876019}
   - component: {fileID: 1022185452263351435}
+  - component: {fileID: 1688055658}
   m_Layer: 0
   m_Name: UnitRoot
   m_TagString: Untagged
@@ -1541,6 +1543,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1688055658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4162620098317525108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0087f1ad8fe7dc48ae9c6588a2de34c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 5642752608682289462}
 --- !u!1 &4378839361323841676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,7 +2068,7 @@ GameObject:
   - component: {fileID: 5642752607226581837}
   - component: {fileID: 5642752607226581836}
   - component: {fileID: 5642752607226581835}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2154,7 +2169,7 @@ GameObject:
   - component: {fileID: 5642752607764815103}
   - component: {fileID: 5642752607764815089}
   - component: {fileID: 5642752607764815088}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2230,7 +2245,7 @@ GameObject:
   - component: {fileID: 5642752607995272428}
   - component: {fileID: 5642752607995272430}
   - component: {fileID: 5642752607995272429}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2305,7 +2320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5642752608405083634}
   - component: {fileID: 5642752608405083635}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Enemy_HP_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2394,7 +2409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5642752608489686600}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}

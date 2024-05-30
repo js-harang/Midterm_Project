@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class StartSceneController : MonoBehaviour
 {
+    GameManager gm;
     ScreenManager sm;
 
     TextMeshProUGUI text;
 
     private void Start()
     {
+        gm = GameManager.gameManager;
         sm = ScreenManager.screenManager;
 
         text = GameObject.Find("TouchToStart").GetComponent<TextMeshProUGUI>();
@@ -24,6 +26,7 @@ public class StartSceneController : MonoBehaviour
 
     private void GameStartBtn()
     {
+        gm.gameState = GameState.Playing;
         sm.ChangeScene("02_Main");
     }
 }

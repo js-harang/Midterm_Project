@@ -9,9 +9,6 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField, Space(10)]
-    GameState gameState;
-
     public static GameManager gameManager = null;
 
     private void Awake()
@@ -26,7 +23,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [Space(10)]
+    public GameState gameState;
+
+    [Space(10)]
     public int enemyMaxCount;
+
+    [Space(10)]
+    public int level;
+    public int startLevel;
+    public int endLevel;
+    public int expRequired;
+
+    [Space(10)]
+    public int str;
+    public int maxHp;
+    public int maxMp;
+    public int criticalChance;
+    public int criticalDamage;
+
+    [Space(10)]
+    public int momey;
+    public int stat;
 
     private void Start()
     {
