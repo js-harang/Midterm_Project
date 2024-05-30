@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,14 +60,14 @@ public class PlayerController : MonoBehaviour
         currentTime = attackDelay;
 
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
+        StartCoroutine(AttackCoroutine());
     }
 
     private void Update()
     {
         if (gm.gameState == GameState.GameOver)
             return;
-
-        FindTarget();
 
         switch (playerState)
         {
@@ -77,9 +76,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Run:
                 Run();
-                break;
-            case PlayerState.AttackDelay:
-                FindTarget();
                 break;
             case PlayerState.Death:
                 Death();
@@ -96,17 +92,6 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("State", 1);
             return;
         }
-
-        // Idle -> Attack
-        foreach (GameObject target in enemys)
-        {
-            EnemyController ec = target.GetComponent<EnemyController>();
-            if (Vector3.Distance(transform.position, target.transform.position) < attackDistance)
-            {
-                playerState = PlayerState.AttackDelay;
-                animator.SetTrigger("ToAttackDelay");
-            }
-        }
     }
 
     private void Run()
@@ -117,17 +102,6 @@ public class PlayerController : MonoBehaviour
             playerState = PlayerState.Idle;
             animator.SetFloat("State", 0);
             return;
-        }
-
-        // Run -> Attack
-        foreach (GameObject target in enemys)
-        {
-            EnemyController ec = target.GetComponent<EnemyController>();
-            if (Vector3.Distance(transform.position, target.transform.position) < attackDistance)
-            {
-                playerState = PlayerState.AttackDelay;
-                animator.SetTrigger("ToAttackDelay");
-            }
         }
 
         Vector3 dir = new Vector3(stick.Horizontal, stick.Vertical, 0);
@@ -149,65 +123,6 @@ public class PlayerController : MonoBehaviour
         transform.position = Camera.main.ViewportToWorldPoint(pos);
     }
 
-    private void FindTarget()
-    {
-        List<GameObject> targets = new List<GameObject>();
-
-        foreach (GameObject target in enemys)
-        {
-            EnemyController ec = target.GetComponent<EnemyController>();
-            if (Vector3.Distance(transform.position, target.transform.position) < attackDistance
-                && ec.enemyState != EnemyState.Death)
-                targets.Add(target);
-        }
-
-        Debug.Log(targets.Count);
-
-        if (targets.Count <= 0)
-        {
-            if (playerState == PlayerState.Attack || playerState == PlayerState.AttackDelay)
-            {
-                playerState = PlayerState.Idle;
-                animator.SetFloat("State", 0);
-            }
-        }
-        else
-        {
-            animator.SetTrigger("ToAttackDelay");
-            playerState = PlayerState.AttackDelay;
-            AttackDelay(targets);
-        }
-    }
-
-    private void AttackDelay(List<GameObject> targets)
-    {
-        currentTime += Time.deltaTime;
-        if (currentTime > attackDelay)
-        {
-            currentTime = 0;
-            animator.SetTrigger("StartAttack");
-            playerState = PlayerState.Attack;
-            Attack(targets);
-        }
-    }
-
-    private void Attack(List<GameObject> targets)
-    {
-        StartCoroutine(AttackCoroutine(targets));
-        playerState = PlayerState.AttackDelay;
-    }
-
-    private IEnumerator AttackCoroutine(List<GameObject> targets)
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        foreach (GameObject target in targets)
-        {
-            EnemyController ec = target.GetComponent<EnemyController>();
-            ec.DamageAction(damage);
-        }
-    }
-
     public void DamageAction(int enemyDamage)
     {
         hp -= enemyDamage;
@@ -227,82 +142,67 @@ public class PlayerController : MonoBehaviour
         gm.gameState = GameState.GameOver;
     }
 
+    public IEnumerator AttackCoroutine()
+    {
+        while (true)
+        {
+            GameObject target = GetTarget();
+            if (target != null)
+            {
+                playerState = PlayerState.AttackDelay;
+                animator.SetTrigger("ToAttackDelay");
+                Attack(target);
+            }
+            else
+            {
+                playerState = PlayerState.Idle;
+                animator.SetFloat("State", 0);
+            }
 
+            if (stick.Horizontal != 0 || stick.Vertical != 0)
+            {
+                playerState = PlayerState.Run;
+                animator.SetFloat("State", 1);
+            }
 
+            yield return new WaitForSeconds(attackDelay);
+        }
+    }
 
+    public GameObject GetTarget()
+    {
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject target in targets)
+        {
+            EnemyController ec = target.GetComponent<EnemyController>();
+            if (Vector3.Distance(transform.position, target.transform.position) < attackDistance
+                && ec.enemyState != EnemyState.Death)
+                return target;
+        }
 
+        return null;
+    }
 
+    public void Attack(GameObject targetObject)
+    {
+        if (stick.Horizontal != 0 || stick.Vertical != 0)
+        {
+            playerState = PlayerState.Run;
+            animator.SetFloat("State", 1);
+            return;
+        }
 
+        playerState = PlayerState.Attack;
+        animator.SetTrigger("StartAttack");
+        StartCoroutine(Hit(targetObject));
 
+    }
 
-    //private void Attack()
-    //{
-    //    if (stick.Horizontal != 0 || stick.Vertical != 0)
-    //    {
-    //        playerState = PlayerState.Run;
-    //        animator.SetFloat("State", 1);
-    //        return;
-    //    }
+    private IEnumerator Hit(GameObject targetObject)
+    {
+        yield return new WaitForSeconds(0.5f);
 
-    //    animator.SetTrigger("StartAttack");
-
-    //    StartCoroutine(AttackAction());
-    //    playerState = PlayerState.AttackDelay;
-    //}
-
-
-    //private IEnumerator AttackAction()
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-
-    //    foreach (GameObject target in attackableEnemy)
-    //    {
-    //        EnemyController ec = target.GetComponent<EnemyController>();
-    //        if (ec.enemyState != EnemyState.Death)
-    //            ec.DamageAction(damage);
-    //    }
-    //}
-
-
-    //private IEnumerator AttackCoroutine()
-    //{
-    //    while (true)
-    //    {
-    //        attackableEnemy = Target();
-
-    //        // Attack -> Idle
-    //        if (attackableEnemy.Count != 0)
-    //        {
-    //            playerState = PlayerState.Attack;
-    //            animator.SetTrigger("ToAttackDelay");
-    //            Attack();
-    //        }
-    //        else
-    //            playerState = PlayerState.Idle;
-
-    //        yield return new WaitForSeconds(attackDelay);
-    //    }
-    //}
-
-    //public List<GameObject> Target()
-    //{
-    //    GameObject[] Enemys = GameObject.FindGameObjectsWithTag("Enemy");
-    //    List<GameObject> targets = new List<GameObject>();
-
-    //    foreach (GameObject target in Enemys)
-    //    {
-    //        EnemyController ec = target.GetComponent<EnemyController>();
-    //        if (target.gameObject.layer == LayerMask.NameToLayer("Enemy")
-    //            && Vector3.Distance(transform.position, target.transform.position) < attackDistance
-    //            && ec.enemyState != EnemyState.Death)
-    //            targets.Add(target);
-    //    }
-
-    //    if (targets.Count > 0)
-    //    {
-    //        StartCoroutine
-    //    }
-
-    //    return targets;
-    //}
+        EnemyController ec = targetObject.GetComponent<EnemyController>();
+        ec.DamageAction(damage);
+    }
 }

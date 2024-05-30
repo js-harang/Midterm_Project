@@ -5683,7 +5683,7 @@ MonoBehaviour:
   hpSlider: {fileID: 1036015864}
   mp: 0
   mpSlider: {fileID: 491850552}
-  damage: 50
+  damage: 5
   stick: {fileID: 421536439}
   speed: 2
   attackDistance: 1.75

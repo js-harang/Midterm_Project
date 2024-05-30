@@ -125,7 +125,7 @@ public class EnemyController : MonoBehaviour
     IEnumerator DeathProcess()
     {
         yield return new WaitForSeconds(3f);
-        Destroy(this);
+        Destroy(gameObject);
     }
 
     public void AttackAction()
