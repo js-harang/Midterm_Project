@@ -256,7 +256,7 @@ MonoBehaviour:
   startLevel: 1
   endLevel: 100
   expRequired: 100
-  str: 0
+  str: 5
   maxHp: 100
   maxMp: 100
   criticalChance: 0

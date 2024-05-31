@@ -124,8 +124,8 @@ public class MainSceneController : MonoBehaviour
         if (gm.money < strCost)
             return;
 
-        strCost = gm.str - 5 + 1;
         gm.money -= strCost;
+        strCost++;
         gm.str += 1;
         CostUpdate(statTxt.strTxt, statTxt.strCostTxt, strCost);
     }
@@ -168,5 +168,6 @@ public class MainSceneController : MonoBehaviour
     {
         txt.text = (cost - 1).ToString();
         costTxt.text = "Money\n" + cost;
+        MoneyUpdate();
     }
 }
