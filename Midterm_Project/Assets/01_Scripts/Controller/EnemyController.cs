@@ -12,7 +12,11 @@ public enum EnemyState
 
 public class EnemyController : MonoBehaviour
 {
+    GameManager gm;
+    MainSceneController gc;
     PlayerController pc;
+    CreateEnemy ce;
+    LevelSystem ls;
 
     [Space(10)]
     public EnemyState enemyState;
@@ -38,17 +42,26 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Space(10)]
     int money;
     [SerializeField]
-    float exp;
+    int exp;
 
     Animator animator;
 
+    private void OnEnable()
+    {
+        animator = transform.GetComponentInChildren<Animator>();
+        animator.SetTrigger("ReCreate");
+        enemyState = EnemyState.Run;
+        hp = maxHp;
+    }
+
     private void Start()
     {
+        gm = GameManager.gameManager;
+        gc = GameObject.Find("GameController").GetComponent<MainSceneController>();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        ce = GameObject.Find("EnemyManager").GetComponent<CreateEnemy>();
+        ls = GameObject.Find("GameController").GetComponent<LevelSystem>();
 
-        enemyState = EnemyState.Run;
-
-        animator = transform.GetComponentInChildren<Animator>();
         player = GameObject.Find("Player").transform;
 
         hp = maxHp;
@@ -96,7 +109,18 @@ public class EnemyController : MonoBehaviour
 
         Vector3 dir = player.position - transform.position;
         dir.Normalize();
-        transform.Translate(dir * moveSpeed * Time.deltaTime);
+
+        if (dir.x > 0)
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 180f, 0);
+            Vector3 newDir = new Vector3(-dir.x, dir.y, dir.z);
+            transform.Translate(newDir * moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.Translate(dir * moveSpeed * Time.deltaTime);
+        }
     }
 
     private void Attack()
@@ -124,8 +148,17 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator DeathProcess()
     {
+        gm.money += money;
+        gc.MoneyUpdate();
+        ls.IncreaseExp(exp);
+
         yield return new WaitForSeconds(3f);
-        Destroy(gameObject);
+
+        if (pc.playerState != PlayerState.Death)
+        {
+            gameObject.SetActive(false);
+            ce.enemyObjectPool.Add(gameObject);
+        }
     }
 
     public void AttackAction()

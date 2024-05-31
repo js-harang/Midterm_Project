@@ -10,7 +10,8 @@ public class CreateEnemy : MonoBehaviour
 
     [SerializeField, Space(10)]
     GameObject enemyPrefap;
-    List<GameObject> enemyObjectPool;
+    //[HideInInspector]
+    public List<GameObject> enemyObjectPool;
 
     [SerializeField, Space(10)]
     GameObject[] createZone;
@@ -58,6 +59,6 @@ public class CreateEnemy : MonoBehaviour
         GameObject enemy = enemyObjectPool[0];
         enemy.transform.position = createObject.transform.position + RandomPostion;
         enemy.SetActive(true);
-        enemyObjectPool.Remove(enemy);
+        enemyObjectPool.Remove(enemyObjectPool[0]);
     }
 }
