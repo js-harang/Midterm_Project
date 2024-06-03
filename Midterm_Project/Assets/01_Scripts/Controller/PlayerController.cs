@@ -147,7 +147,6 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             GameObject target = GetTarget();
-            if (target != null)
             {
                 playerState = PlayerState.AttackDelay;
                 animator.SetTrigger("ToAttackDelay");
