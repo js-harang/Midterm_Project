@@ -26,8 +26,6 @@ public class PlayerController : MonoBehaviour
     public int mp;
     [SerializeField]
     Slider mpSlider;
-    [SerializeField]
-    int damage;
 
     [SerializeField, Space(10)]
     Joystick stick;
@@ -36,11 +34,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField, Space(10)]
     float attackDistance;
-    float currentTime;
     [SerializeField, Space(10)]
     float attackDelay;
-
-    GameObject[] enemys;
 
     Animator animator;
 
@@ -53,13 +48,9 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetComponentInChildren<Animator>();
 
         hp = gm.maxHp;
-        hpSlider.value = (float)hp / gm.maxHp;
+        HpBarUpdate();
         mp = gm.maxMp;
-        mpSlider.value = (float)hp / gm.maxMp;
-
-        currentTime = attackDelay;
-
-        enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        MpBarUpdate();
 
         StartCoroutine(AttackCoroutine());
     }
@@ -126,7 +117,7 @@ public class PlayerController : MonoBehaviour
     public void DamageAction(int enemyDamage)
     {
         hp -= enemyDamage;
-        hpSlider.value = (float)hp / gm.maxHp;
+        HpBarUpdate();
 
         // AnyState -> Death
         if (hp <= 0)
@@ -140,11 +131,12 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetTrigger("ToDeath");
         gm.gameState = GameState.GameOver;
+        playerState = PlayerState.Death;
     }
 
     public IEnumerator AttackCoroutine()
     {
-        while (true)
+        while (playerState != PlayerState.Death)
         {
             GameObject target = GetTarget();
             {
@@ -194,7 +186,6 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.Attack;
         animator.SetTrigger("StartAttack");
         StartCoroutine(Hit(targetObject));
-
     }
 
     private IEnumerator Hit(GameObject targetObject)
@@ -202,6 +193,16 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         EnemyController ec = targetObject.GetComponent<EnemyController>();
-        ec.DamageAction(damage);
+        ec.DamageAction(gm.str);
+    }
+
+    public void HpBarUpdate()
+    {
+        hpSlider.value = (float)hp / gm.maxHp;
+    }
+
+    public void MpBarUpdate()
+    {
+        mpSlider.value = (float)hp / gm.maxMp;
     }
 }

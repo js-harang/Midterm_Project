@@ -43,8 +43,11 @@ public class GameManager : MonoBehaviour
     public int criticalDamage;
 
     [Space(10)]
-    public int momey;
+    public int money;
     public int stat;
+
+    [HideInInspector]
+    public int gameSpeed = 1;
 
     private void Start()
     {

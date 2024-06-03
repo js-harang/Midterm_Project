@@ -7,6 +7,7 @@ public class EnemyHitEvent : MonoBehaviour
 
     private void EnemyHit()
     {
-        enemyController.AttackAction();
+        if (this.name == "Enemy")
+            enemyController.AttackAction();
     }
 }
